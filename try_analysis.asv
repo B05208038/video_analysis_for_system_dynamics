@@ -21,9 +21,6 @@ imshow(R)
 video_1 = VideoReader('video-1577262358.mp4'); 
 get (video_1) 
 
-%for frame_by_frame
-mkdir Frame_by_frame
-
 %cut video into pcitures and substract red dot
 NumberOfFrames =uint8( video_1.Duration .* video_1.FrameRate); 
 video_tear_down = zeros(video_1.Height, video_1.Width, NumberOfFrames);
