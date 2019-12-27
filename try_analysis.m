@@ -2,8 +2,9 @@
 %For PePe's second lab
 %try to analyze the picture, distinguish colors from it
 clc; clear all
+
 pic = imread ('SharedScreenshot.jpg'); 
-figure (1)
+% figure (1)
 % imshow(pic)
 gray_pic = rgb2gray(pic); 
 [size_pic_x, size_pic_y] = size (gray_pic); 
@@ -11,20 +12,20 @@ R_shell_pic = uint8(pic(:, :, 1));
 G_shell_pic = uint8(pic(:, :, 2));
 B_shell_pic = uint8(pic(:, :, 3)); 
 
-figure (2)
+%figure (2)
 cut_x = 10; 
 cut_y = 95; 
 cropped = imcrop(pic, [cut_y cut_x size_pic_y-cut_y size_pic_x-cut_x]);
-imshow(cropped)
+
 
 % test out substract method
 R = imsubtract(R_shell_pic, gray_pic); 
-figure (200)
+%figure (200)
 R = im2bw(R, 0.30);
-imshow(R)
+
 
 %do the video processing 
-video_1 = VideoReader('video-1577262358.mp4'); 
+video_1 = VideoReader('11.0.90.mp4'); 
 get (video_1) 
 
 %for frame_by_frame
@@ -60,15 +61,14 @@ for img = 1:NumberOfFrames
    centroids = cat(1,s.Centroid);  
    Csize=size(centroids);
    dotnumber=Csize(1);
-   figure(4);
+   %figure(4);
      
     if (dotnumber==3)
         x1=centroids(1,1);x2=centroids(2,1);x3=centroids(3,1);
         y1=centroids(1,2);y2=centroids(2,2);y3=centroids(3,2);
         theta1=atan((x2-x1)/(y2-y1));
         theta2=atan((x3-x2)/(y3-y2))+theta1; 
-        plot(img,theta1,'r^');
-        plot(img,theta2,'b^');
+       
         
     elseif (dotnumber==4)
         x1=centroids(1,1);
@@ -79,8 +79,7 @@ for img = 1:NumberOfFrames
         y3=centroids(4,2);
         theta1=atan((x2-x1)/(y2-y1));
         theta2=atan((x3-x2)/(y3-y2))+theta1; 
-        %plot(img,theta1,'ro');
-        %plot(img,theta2,'bo');
+       
     end
     plot_point(img, 1) = theta1; 
     plot_point(img, 2) = theta2;
@@ -97,12 +96,12 @@ end
 
 figure(1000)
 t = linspace(0, video_1.Duration, NumberOfFrames);
-
 theta_1 = plot_point(:,1).';
 theta_2 = plot_point(:,2).'; 
-plot(t,theta_1, 'r-o', t, theta_2,  'b-*');
+plot(t,theta_1, 'r', t, theta_2,  'b');
 title('experimental response')
 xlabel('time (sec)')
 ylabel('theta(rad)')
 legend('theta 1','theta 2')
-
+print(1000,'-djpeg','result.jpeg')
+ 
