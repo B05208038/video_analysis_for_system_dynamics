@@ -25,7 +25,7 @@ R = im2bw(R, 0.30);
 
 
 %do the video processing 
-video_1 = VideoReader('11.0.90.mp4'); 
+video_1 = VideoReader('12.0.90.mp4'); 
 get (video_1) 
 
 %for frame_by_frame
@@ -62,26 +62,25 @@ for img = 1:NumberOfFrames
    Csize=size(centroids);
    dotnumber=Csize(1);
    %figure(4);
-     
+   theta1 = 0; 
+   theta2 = 0; 
     if (dotnumber==3)
         x1=centroids(1,1);x2=centroids(2,1);x3=centroids(3,1);
         y1=centroids(1,2);y2=centroids(2,2);y3=centroids(3,2);
         theta1=atan((x2-x1)/(y2-y1));
-        theta2=atan((x3-x2)/(y3-y2))+theta1; 
-       
-        
+        theta2=atan((x3-x2)/(y3-y2))+theta1;   
     elseif (dotnumber==4)
         x1=centroids(1,1);
         x2=(centroids(2,1)+centroids(3,1))/2;
         x3=centroids(4,1);
         y1=centroids(1,2);
-        y2=(centroids(2,2)+centroids(3,2))/2;;
+        y2=(centroids(2,2)+centroids(3,2))/2;
         y3=centroids(4,2);
         theta1=atan((x2-x1)/(y2-y1));
         theta2=atan((x3-x2)/(y3-y2))+theta1; 
-       
     end
-    plot_point(img, 1) = theta1; 
+    
+    plot_point(img, 1) = theta1;
     plot_point(img, 2) = theta2;
     
     %plot_point 
@@ -103,5 +102,5 @@ title('experimental response')
 xlabel('time (sec)')
 ylabel('theta(rad)')
 legend('theta 1','theta 2')
-print(1000,'-djpeg','result.jpeg')
+print(1000,'-djpeg','12.0.90.jpeg')
  
